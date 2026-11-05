@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MYQRSITE | Luxury Event & Wedding QR Microsites</title>
+  
+  <!-- Google Fonts: Cormorant Garamond (Editorial Elegance) & Plus Jakarta Sans (Clean Modern UI) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- QRCode.js for the dynamic generator tool -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <!-- Tailwind Configuration with bespoke luxury wedding & event palette -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            champagne: {
+              50: '#FDFBF7',
+              100: '#FAF5ED',
+              200: '#F5EBD9',
+              300: '#EBD7B8',
+              400: '#DFBE91',
+              500: '#CFA76B',
+              600: '#B88D4E',
+              700: '#946D37',
+              800: '#75542B',
+              900: '#5A4022',
+            },
+            roseGold: {
+              300: '#F0C8BC',
+              400: '#E4A899',
+              500: '#D58977',
+              600: '#B76E5F',
+            },
+            onyx: {
+              800: '#1A1816',
+              900: '#121110',
+              950: '#0B0A09',
+            }
+          },
+          boxShadow: {
+            'luxury': '0 20px 50px -12px rgba(207, 167, 107, 0.25)',
+            'phone': '0 30px 80px -15px rgba(24, 20, 16, 0.45)',
+            'glow': '0 0 40px rgba(223, 190, 145, 0.35)',
+          },
+          animation: {
+            'float-slow': 'floatSlow 7s ease-in-out infinite',
+            'pulse-subtle': 'pulseSubtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            floatSlow: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-12px)' },
+            },
+            pulseSubtle: {
+              '0%, 100%': { opacity: '0.4' },
+              '50%': { opacity: '0.8' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="font-sans bg-champagne-50 text-onyx-900 antialiased selection:bg-champagne-300 selection:text-onyx-950 overflow-x-hidden">
+
+  <!-- ==================== NOTIFICATION TOAST ==================== -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-300 pointer-events-none flex items-center space-x-3 bg-onyx-900 text-champagne-100 px-5 py-3.5 rounded-2xl shadow-luxury border border-champagne-500/30 text-sm">
+    <i data-lucide="check-circle" class="w-5 h-5 text-champagne-400"></i>
+    <span id="toast-message">Notification message</span>
+  </div>
+
+  <!-- ==================== HEADER & NAVBAR ==================== -->
+  <header class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-champagne-50/90 backdrop-blur-md border-b border-champagne-200/60" id="main-header">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Brand Logo -->
+        <a href="#" class="flex items-center space-x-3 group">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-champagne-600 via-champagne-400 to-roseGold-400 p-[1.5px] shadow-sm transition-transform duration-300 group-hover:scale-105">
+            <div class="w-full h-full bg-champagne-50 rounded-[10px] flex items-center justify-center relative overflow-hidden">
+              <i data-lucide="qr-code" class="w-5 h-5 text-champagne-700"></i>
+              <div class="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-roseGold-500 border border-white flex items-center justify-center">
+                <span class="text-[8px] text-white font-bold">✦</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-serif text-2xl font-bold tracking-wider text-onyx-900 uppercase">MYQR<span class="text-champagne-600 font-light">SITE</span></span>
+            <span class="text-[9px] uppercase tracking-[0.25em] text-champagne-700 font-semibold -mt-1">Event Microsites</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-onyx-800">
+          <a href="#features" class="hover:text-champagne-600 transition-colors">Features</a>
+          <a href="#templates" class="hover:text-champagne-600 transition-colors">Templates</a>
+          <a href="#interactive-demo" class="hover:text-champagne-600 transition-colors">Live Demo</a>
+          <a href="#how-it-works" class="hover:text-champagne-600 transition-colors">How It Works</a>
+          <a href="#faq" class="hover:text-champagne-600 transition-colors">FAQ</a>
+        </nav>
+
+        <!-- Right Action Button -->
+        <div class="hidden sm:flex items-center space-x-4">
+          <a href="#qr-demo" class="text-sm font-medium text-champagne-700 hover:text-champagne-900 transition-colors">
+            Try QR Generator
+          </a>
+          <a href="#qr-demo" class="relative inline-flex items-center justify-center px-6 py-2.5 overflow-hidden text-sm font-medium text-white transition duration-300 ease-out bg-gradient-to-r from-champagne-600 via-champagne-500 to-roseGold-500 rounded-full shadow-md hover:shadow-luxury group">
+            <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-roseGold-500 to-champagne-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+            <span class="relative flex items-center gap-1.5 font-semibold tracking-wide">
+              Create Event Site
+              <i data-lucide="sparkles" class="w-4 h-4 ml-1"></i>
+            </span>
+          </a>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" class="p-2 md:hidden text-onyx-800 hover:text-champagne-600 focus:outline-none" aria-label="Toggle Navigation">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-champagne-50 border-b border-champagne-200 px-6 py-6 space-y-4">
+      <a href="#features" class="block text-base font-medium text-onyx-800 hover:text-champagne-600 mobile-link">Features</a>
+      <a href="#templates" class="block text-base font-medium text-onyx-800 hover:text-champagne-600 mobile-link">Templates</a>
+      <a href="#interactive-demo" class="block text-base font-medium text-onyx-800 hover:text-champagne-600 mobile-link">Live Demo</a>
+      <a href="#how-it-works" class="block text-base font-medium text-onyx-800 hover:text-champagne-600 mobile-link">How It Works</a>
+      <a href="#faq" class="block text-base font-medium text-onyx-800 hover:text-champagne-600 mobile-link">FAQ</a>
+      <div class="pt-4 border-t border-champagne-200 flex flex-col gap-3">
+        <a href="#qr-demo" class="w-full text-center py-2.5 rounded-full border border-champagne-400 text-champagne-700 font-medium mobile-link">Try QR Generator</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== HERO SECTION WITH INTERACTIVE SMARTPHONE ==================== -->
+  <section class="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden">
+    <!-- Ambient Background Lighting Glows -->
+    <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-gradient-to-br from-champagne-300/30 via-roseGold-300/20 to-transparent blur-[120px] -z-10 pointer-events-none"></div>
+    <div class="absolute top-1/3 -left-32 w-96 h-96 bg-champagne-200/40 rounded-full blur-[90px] -z-10 pointer-events-none"></div>
+    <div class="absolute top-1/2 -right-32 w-96 h-96 bg-roseGold-300/30 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        
+        <!-- Left Hero Copy -->
+        <div class="lg:col-span-6 space-y-6 text-center lg:text-left">
+          
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-champagne-100 border border-champagne-300/80 text-champagne-800 text-xs sm:text-sm font-medium tracking-wide">
+            <span class="w-2 h-2 rounded-full bg-champagne-500 animate-ping"></span>
+            <span>Next-Gen Wedding & Event Invitations</span>
+          </div>
+
+          <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-onyx-900 leading-[1.12]">
+            Turn Moments into Digital Memories with Beautiful <span class="italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-champagne-700 via-champagne-600 to-roseGold-600">Event QR Microsites</span>
+          </h1>
+
+          <p class="text-base sm:text-lg text-onyx-800/80 max-w-xl mx-auto lg:mx-0 font-light leading-relaxed">
+            Eliminate bulky paper programs. Give your guests an unforgettable digital experience simply by scanning a bespoke QR code: instant RSVP, ceremony timeline, live reception photo uploads, registry, Spotify playlist, and turn-by-turn navigation.
+          </p>
+
+          <!-- Dual CTAs and Stats -->
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+            <a href="#templates" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gradient-to-r from-champagne-600 via-champagne-500 to-roseGold-500 text-white font-medium text-base shadow-luxury hover:shadow-glow transition-all duration-300 flex items-center justify-center gap-2 group">
+              <span>Explore Templates</span>
+              <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+            </a>
+
+            <a href="#interactive-demo" class="w-full sm:w-auto px-8 py-3.5 rounded-full glass-card hover:bg-white text-onyx-800 border border-champagne-300 font-medium text-base transition-all duration-300 flex items-center justify-center gap-2">
+              <i data-lucide="smartphone" class="w-4 h-4 text-champagne-600"></i>
+              <span>Try Live Simulator</span>
+            </a>
+          </div>
+
+          <!-- Trust Badges -->
+          <div class="pt-6 border-t border-champagne-200/80 grid grid-cols-3 gap-4 max-w-lg mx-auto lg:mx-0">
+            <div>
+              <p class="font-serif text-2xl sm:text-3xl font-bold text-champagne-700">12,500+</p>
+              <p class="text-xs text-onyx-800/70 font-medium">Events Hosted</p>
+            </div>
+            <div>
+              <p class="font-serif text-2xl sm:text-3xl font-bold text-champagne-700">99.4%</p>
+              <p class="text-xs text-onyx-800/70 font-medium">Guest RSVP Rate</p>
+            </div>
+            <div>
+              <p class="font-serif text-2xl sm:text-3xl font-bold text-champagne-700">&lt; 3 mins</p>
+              <p class="text-xs text-onyx-800/70 font-medium">Setup Time</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Hero: Interactive Smartphone Simulator -->
+        <div class="lg:col-span-6 flex justify-center lg:justify-end relative" id="interactive-demo">
+          
+          <!-- Decorative Background Circles & Badges -->
+          <div class="absolute -top-6 -right-6 hidden sm:block p-3 rounded-2xl glass-card shadow-lg border border-champagne-300 animate-float-slow z-20">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-champagne-100 flex items-center justify-center text-champagne-700">
+                <i data-lucide="camera" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <p class="text-xs font-semibold text-onyx-900">Live Photo Wall</p>
+                <p class="text-[10px] text-champagne-600">142 photos shared live!</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="absolute -bottom-6 -left-6 hidden sm:block p-3.5 rounded-2xl glass-card shadow-lg border border-champagne-300 z-20">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                <i data-lucide="check" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <p class="text-xs font-semibold text-onyx-900">Instant RSVP Synced</p>
+                <p class="text-[10px] text-gray-500">Dietary & Vegan recorded</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Smartphone Shell -->
+          <div class="w-[320px] sm:w-[350px] bg-onyx-900 p-3 sm:p-3.5 rounded-[44px] shadow-phone border-[5px] border-champagne-400/40 relative">
+            
+            <!-- Dynamic Island / Speaker Notch -->
+            <div class="w-28 h-5 bg-onyx-950 rounded-full mx-auto mb-2 flex items-center justify-center space-x-2">
+              <div class="w-2.5 h-2.5 rounded-full bg-onyx-900/80"></div>
+              <div class="w-1.5 h-1.5 rounded-full bg-onyx-800"></div>
+            </div>
+
+            <!-- Phone Screen Content (The Microsite) -->
+            <div class="bg-champagne-50 rounded-[34px] overflow-hidden border border-champagne-200 flex flex-col h-[570px] relative">
+              
+              <!-- Microsite Top Bar inside Screen -->
+              <div class="bg-gradient-to-r from-champagne-700 via-champagne-600 to-roseGold-500 text-white px-4 py-3 flex items-center justify-between shadow-sm">
+                <div class="flex items-center space-x-1.5">
+                  <i data-lucide="heart" class="w-3.5 h-3.5 text-roseGold-300 fill-roseGold-300"></i>
+                  <span class="text-xs font-serif font-bold tracking-wider uppercase">Aria & Liam</span>
+                </div>
+                <div class="flex items-center space-x-2 text-[10px] bg-black/20 px-2 py-0.5 rounded-full">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span>LIVE EVENT</span>
+                </div>
+              </div>
+
+              <!-- Interactive Tabs inside Phone -->
+              <div class="flex border-b border-champagne-200 bg-champagne-100/90 text-[11px] overflow-x-auto no-scrollbar font-medium">
+                <button onclick="switchPhoneTab('home')" id="tab-home" class="phone-tab px-3 py-2 text-champagne-800 border-b-2 border-champagne-600 whitespace-nowrap">Welcome</button>
+                <button onclick="switchPhoneTab('schedule')" id="tab-schedule" class="phone-tab px-3 py-2 text-onyx-800/60 hover:text-champagne-700 whitespace-nowrap">Schedule</button>
+                <button onclick="switchPhoneTab('rsvp')" id="tab-rsvp" class="phone-tab px-3 py-2 text-onyx-800/60 hover:text-champagne-700 whitespace-nowrap">RSVP</button>
+                <button onclick="switchPhoneTab('gallery')" id="tab-gallery" class="phone-tab px-3 py-2 text-onyx-800/60 hover:text-champagne-700 whitespace-nowrap">Live Wall</button>
+                <button onclick="switchPhoneTab('music')" id="tab-music" class="phone-tab px-3 py-2 text-onyx-800/60 hover:text-champagne-700 whitespace-nowrap">Playlist</button>
+              </div>
+
+              <!-- Phone Content Area (Scrollable within Phone) -->
+              <div class="flex-1 overflow-y-auto p-4 space-y-4 text-onyx-900 text-xs no-scrollbar relative" id="phone-screen-body">
+
+                <!-- 1. HOME TAB SCREEN -->
+                <div id="screen-home" class="phone-screen space-y-4">
+                  <div class="relative rounded-2xl overflow-hidden bg-gradient-to-b from-champagne-200 to-champagne-100 p-6 text-center border border-champagne-300/60 shadow-inner">
+                    <p class="text-[10px] uppercase tracking-widest text-champagne-700 font-semibold mb-1">We Are Getting Married</p>
+                    <h3 class="font-serif text-2xl font-bold text-onyx-900">Aria Montgomery</h3>
+                    <p class="font-serif italic text-champagne-600 text-base">&amp;</p>
+                    <h3 class="font-serif text-2xl font-bold text-onyx-900 mb-2">Liam Sterling</h3>
+                    <div class="inline-block px-3 py-1 bg-white/80 rounded-full text-[10px] text-onyx-800 font-medium">
+                      October 24, 2026 • Florence, Italy
+                    </div>
+                  </div>
+
+                  <!-- Quick QR Code badge preview within phone -->
+                  <div class="bg-white p-3 rounded-2xl border border-champagne-200 shadow-sm flex items-center space-x-3">
+                    <div class="w-14 h-14 bg-champagne-50 p-1 rounded-xl border border-champagne-300 flex items-center justify-center shrink-0">
+                      <!-- Stylized mini QR -->
+                      <svg class="w-full h-full text-champagne-800" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M2 2h8v8H2V2zm2 2v4h4V4H4zm10-2h8v8h-8V2zm2 2v4h4V4h-4zM2 14h8v8H2v-8zm2 2v4h4v-4H4zm14-2h4v2h-4v-2zm-4 0h2v4h-2v-4zm2 4h2v4h-2v-4zm2 2h4v2h-4v-2zm-6-2h2v4h-2v-4zm-8-7h2v2H6V9zm4 0h2v2h-2V9zm-4 4h2v2H6v-2zm10 0h2v2h-2v-2z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="font-semibold text-onyx-900 text-xs">Official Guest Pass</p>
+                      <p class="text-[10px] text-gray-500">Scan at entrance for table seating & photo sync.</p>
+                    </div>
+                  </div>
+
+                  <!-- Action Buttons inside Phone -->
+                  <div class="grid grid-cols-2 gap-2">
+                    <button onclick="switchPhoneTab('rsvp')" class="p-2.5 rounded-xl bg-champagne-600 text-white font-medium text-center hover:bg-champagne-700 transition flex items-center justify-center gap-1">
+                      <i data-lucide="calendar-check" class="w-3.5 h-3.5"></i> RSVP Now
+                    </button>
+                    <button onclick="switchPhoneTab('gallery')" class="p-2.5 rounded-xl bg-white border border-champagne-300 text-onyx-800 font-medium text-center hover:bg-champagne-50 transition flex items-center justify-center gap-1">
+                      <i data-lucide="camera" class="w-3.5 h-3.5 text-champagne-600"></i> Snap & Upload
+                    </button>
+                  </div>
+                </div>
+
+                <!-- 2. SCHEDULE TAB SCREEN -->
+                <div id="screen-schedule" class="phone-screen hidden space-y-3">
+                  <div class="flex items-center justify-between pb-1 border-b border-champagne-200">
+                    <h4 class="font-serif font-bold text-sm text-onyx-900">Event Timeline</h4>
+                    <span class="text-[10px] text-champagne-700 font-medium">Villa Cora Gardens</span>
+                  </div>
+                  
+                  <div class="space-y-2.5 text-[11px]">
+                    <div class="flex gap-2.5 bg-white p-2.5 rounded-xl border border-champagne-200">
+                      <span class="font-bold text-champagne-700 w-12 shrink-0">3:30 PM</span>
+                      <div>
+                        <p class="font-semibold text-onyx-900">Welcome Champagne</p>
+                        <p class="text-[10px] text-gray-500">Terrace Overlook • Harpist recital</p>
+                      </div>
+                    </div>
+                    <div class="flex gap-2.5 bg-white p-2.5 rounded-xl border border-champagne-200">
+                      <span class="font-bold text-champagne-700 w-12 shrink-0">4:30 PM</span>
+                      <div>
+                        <p class="font-semibold text-onyx-900">Ceremony Vows</p>
+                        <p class="text-[10px] text-gray-500">The Rose Arbor Garden</p>
+                      </div>
+                    </div>
+                    <div class="flex gap-2.5 bg-white p-2.5 rounded-xl border border-champagne-200">
+                      <span class="font-bold text-champagne-700 w-12 shrink-0">6:30 PM</span>
+                      <div>
+                        <p class="font-semibold text-onyx-900">Candlelit Banquet</p>
+                        <p class="text-[10px] text-gray-500">Grand Mirror Ballroom</p>
+                      </div>
+                    </div>
+                    <div class="flex gap-2.5 bg-white p-2.5 rounded-xl border border-champagne-200">
+                      <span class="font-bold text-champagne-700 w-12 shrink-0">9:30 PM</span>
+                      <div>
+                        <p class="font-semibold text-onyx-900">First Dance & Fireworks</p>
+                        <p class="text-[10px] text-gray-500">Lakeside Pavilion</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 3. RSVP TAB SCREEN -->
+                <div id="screen-rsvp" class="phone-screen hidden space-y-3">
+                  <div class="text-center">
+                    <h4 class="font-serif font-bold text-sm text-onyx-900">Confirm Your Attendance</h4>
+                    <p class="text-[10px] text-gray-500">Please RSVP by September 15</p>
+                  </div>
+
+                  <form onsubmit="handleMockRSVP(event)" class="space-y-2.5 bg-white p-3 rounded-2xl border border-champagne-200">
+                    <div>
+                      <label class="block text-[10px] font-medium text-gray-600 mb-0.5">Full Name</label>
+                      <input type="text" value="Sophia Laurent" class="w-full px-2 py-1.5 text-xs rounded-lg border border-champagne-300 focus:outline-none focus:ring-1 focus:ring-champagne-500">
+                    </div>
+                    <div>
+                      <label class="block text-[10px] font-medium text-gray-600 mb-0.5">Will You Attend?</label>
+                      <select class="w-full px-2 py-1.5 text-xs rounded-lg border border-champagne-300 focus:outline-none">
+                        <option>Joyfully Accepts (2 Guests)</option>
+                        <option>Regretfully Declines</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="block text-[10px] font-medium text-gray-600 mb-0.5">Dietary Restrictions</label>
+                      <input type="text" placeholder="e.g. Vegetarian, Nut Allergy" class="w-full px-2 py-1.5 text-xs rounded-lg border border-champagne-300 focus:outline-none focus:ring-1 focus:ring-champagne-500">
+                    </div>
+                    <button type="submit" class="w-full py-2 bg-champagne-600 hover:bg-champagne-700 text-white rounded-lg font-semibold text-xs transition">
+                      Submit RSVP Response
+                    </button>
+                  </form>
+                </div>
+
+                <!-- 4. GALLERY TAB SCREEN -->
+                <div id="screen-gallery" class="phone-screen hidden space-y-3">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <h4 class="font-serif font-bold text-sm text-onyx-900">Live Guest Camera</h4>
+                      <p class="text-[10px] text-gray-500">Instant upload to ballroom screen</p>
+                    </div>
+                    <button onclick="triggerMockPhotoUpload()" class="p-1.5 bg-champagne-600 text-white rounded-lg shadow-sm flex items-center gap-1 text-[10px]">
+                      <i data-lucide="plus" class="w-3 h-3"></i> Add Photo
+                    </button>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-2" id="gallery-grid">
+                    <div class="relative rounded-xl overflow-hidden aspect-square group shadow-sm">
+                      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80" alt="Wedding Moment" class="w-full h-full object-cover">
+                      <div class="absolute bottom-1 left-1 bg-black/60 backdrop-blur-sm text-[8px] text-white px-1.5 py-0.5 rounded">Elena M.</div>
+                    </div>
+                    <div class="relative rounded-xl overflow-hidden aspect-square group shadow-sm">
+                      <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80" alt="Wedding Toast" class="w-full h-full object-cover">
+                      <div class="absolute bottom-1 left-1 bg-black/60 backdrop-blur-sm text-[8px] text-white px-1.5 py-0.5 rounded">Marcus V.</div>
+                    </div>
+                    <div class="relative rounded-xl overflow-hidden aspect-square group shadow-sm">
+                      <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=400&q=80" alt="Decor" class="w-full h-full object-cover">
+                      <div class="absolute bottom-1 left-1 bg-black/60 backdrop-blur-sm text-[8px] text-white px-1.5 py-0.5 rounded">Cousin David</div>
+                    </div>
+                    <div class="relative rounded-xl overflow-hidden aspect-square group shadow-sm">
+                      <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=400&q=80" alt="Couple Dance" class="w-full h-full object-cover">
+                      <div class="absolute bottom-1 left-1 bg-black/60 backdrop-blur-sm text-[8px] text-white px-1.5 py-0.5 rounded">Table 4 Crew</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 5. PLAYLIST TAB SCREEN -->
+                <div id="screen-music" class="phone-screen hidden space-y-3">
+                  <div class="text-center">
+                    <h4 class="font-serif font-bold text-sm text-onyx-900">Reception Song Requests</h4>
+                    <p class="text-[10px] text-gray-500">Crowdsourced to our live wedding DJ</p>
+                  </div>
+
+                  <div class="space-y-2">
+                    <div class="flex items-center justify-between p-2 rounded-xl bg-white border border-champagne-200">
+                      <div class="flex items-center space-x-2">
+                        <i data-lucide="music" class="w-4 h-4 text-champagne-600"></i>
+                        <div>
+                          <p class="font-semibold text-[11px] text-onyx-900">At Last - Etta James</p>
+                          <p class="text-[9px] text-gray-500">Requested by Liam's Mom</p>
+                        </div>
+                      </div>
+                      <span class="text-[10px] bg-champagne-100 text-champagne-700 px-2 py-0.5 rounded-full font-bold">★ Queued</span>
+                    </div>
+
+                    <div class="flex items-center justify-between p-2 rounded-xl bg-white border border-champagne-200">
+                      <div class="flex items-center space-x-2">
+                        <i data-lucide="music" class="w-4 h-4 text-champagne-600"></i>
+                        <div>
+                          <p class="font-semibold text-[11px] text-onyx-900">Can't Take My Eyes Off You</p>
+                          <p class="text-[9px] text-gray-500">Requested by The Bridesmaids</p>
+                        </div>
+                      </div>
+                      <span class="text-[10px] bg-champagne-100 text-champagne-700 px-2 py-0.5 rounded-full font-bold">★ 18 votes</span>
+                    </div>
+
+                    <div class="p-2 rounded-xl bg-champagne-100/60 border border-dashed border-champagne-400 text-center">
+                      <p class="text-[10px] text-champagne-800 font-medium">Have a song that makes you dance?</p>
+                      <button onclick="showToast('Song request added to DJ playlist!')" class="mt-1 text-[10px] px-3 py-1 bg-champagne-700 text-white rounded-full">
+                        + Request A Song
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Phone Bottom Home Indicator -->
+              <div class="py-2 flex justify-center bg-champagne-50 border-t border-champagne-200">
+                <div class="w-24 h-1 bg-onyx-800/30 rounded-full"></div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Decorative Floating QR Badge for Hero -->
+          <div class="absolute -bottom-4 right-0 sm:right-6 bg-white p-3.5 rounded-2xl shadow-luxury border border-champagne-300 flex items-center space-x-3 cursor-pointer hover:scale-105 transition-transform" onclick="showToast('Previewing Liam & Aria\'s live microsite')">
+            <div class="w-12 h-12 bg-champagne-100 rounded-xl p-1 flex items-center justify-center border border-champagne-300">
+              <i data-lucide="qr-code" class="w-8 h-8 text-champagne-700"></i>
+            </div>
+            <div>
+              <div class="flex items-center space-x-1">
+                <span class="text-xs font-bold text-onyx-900">Scan or Click to Test</span>
+                <span class="text-[10px] text-champagne-600">✦</span>
+              </div>
+              <p class="text-[10px] text-gray-500">Instant mobile-responsive sync</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== LOGO / SOCIAL PROOF STRIP ==================== -->
+  <section class="py-8 bg-champagne-100/60 border-y border-champagne-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-center text-xs uppercase tracking-widest text-champagne-800 font-semibold mb-6">
+        Trusted by luxury wedding planners, couples, and gala coordinators across 40+ countries
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-8 sm:gap-16 opacity-70 grayscale hover:grayscale-0 transition-all duration-300">
+        <span class="font-serif text-xl tracking-wider font-semibold text-onyx-800">VOGUE <span class="text-xs font-sans tracking-normal">Weddings</span></span>
+        <span class="font-serif text-xl tracking-wider font-semibold text-onyx-800">BRIDES &amp; CO.</span>
+        <span class="font-serif text-xl tracking-wider font-semibold text-onyx-800">THE KNOT</span>
+        <span class="font-serif text-xl tracking-wider font-semibold text-onyx-800">HARPER'S BAZAAR</span>
+        <span class="font-serif text-xl tracking-wider font-semibold text-onyx-800">ELLE CELEBRATIONS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== INTERACTIVE FEATURE HIGHLIGHTS ==================== -->
+  <section id="features" class="py-24 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <span class="text-xs uppercase tracking-widest text-champagne-700 font-bold bg-champagne-100 px-3.5 py-1 rounded-full border border-champagne-300">Everything In One QR Code</span>
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-onyx-900">
+          Crafted for Effortless Elegance &amp; Seamless Guest Hospitality
+        </h2>
+        <p class="text-onyx-800/75 text-sm sm:text-base font-light">
+          Say goodbye to lost paper invitations, confused drivers, and uncollected photos. MYQRSITE centralizes every celebration touchpoint into a single tap.
+        </p>
+      </div>
+
+      <!-- Features Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Feature 1 -->
+        <div class="glass-card p-8 rounded-3xl hover:border-champagne-400 hover:shadow-luxury transition-all duration-300 group">
+          <div class="w-14 h-14 rounded-2xl bg-champagne-100 text-champagne-700 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-champagne-600 group-hover:text-white transition-all duration-300 shadow-sm">
+            <i data-lucide="qr-code" class="w-7 h-7"></i>
+          </div>
+          <h3 class="font-serif text-2xl font-bold text-onyx-900 mb-2">Designer QR Badges</h3>
+          <p class="text-sm text-onyx-800/70 leading-relaxed mb-4">
+            Custom-styled QR vectors adorned with your monogram, wedding date, foil tones, or floral borders, ready for letterpress invites, welcome easels, and table tents.
+          </p>
+          <span class="text-xs font-semibold text-champagne-700 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+            Print-ready Vector SVG &amp; PNG <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </span>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="glass-card p-8 rounded-3xl hover:border-champagne-400 hover:shadow-luxury transition-all duration-300 group">
+          <div class="w-14 h-14 rounded-2xl bg-champagne-100 text-champagne-700 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-champagne-600 group-hover:text-white transition-all duration-300 shadow-sm">
+            <i data-lucide="users" class="w-7 h-7"></i>
+          </div>
+          <h3 class="font-serif text-2xl font-bold text-onyx-900 mb-2">Frictionless RSVP &amp; Meal Choice</h3>
+          <p class="text-sm text-onyx-800/70 leading-relaxed mb-4">
+            Guests respond in 15 seconds without creating accounts or downloading apps. Collect dietary needs, plus-one names, and song preferences with instant export to Google Sheets &amp; Excel.
+          </p>
+          <span class="text-xs font-semibold text-champagne-700 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+            Real-time Host Dashboard <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </span>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="glass-card p-8 rounded-3xl hover:border-champagne-400 hover:shadow-luxury transition-all duration-300 group">
+          <div class="w-14 h-14 rounded-2xl bg-champagne-100 text-champagne-700 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-champagne-600 group-hover:text-white transition-all duration-300 shadow-sm">
+            <i data-lucide="camera" class="w-7 h-7"></i>
+          </div>
+          <h3 class="font-serif text-2xl font-bold text-onyx-900 mb-2">Collaborative Live Photo Wall</h3>
+          <p class="text-sm text-onyx-800/70 leading-relaxed mb-4">
+            Guests take photos and upload them directly to a live reception slideshow. Display uploads in real time on the venue projector and download high-res originals next morning.
+          </p>
+          <span class="text-xs font-semibold text-champagne-700 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+            Live Projector Slideshow Mode <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </span>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="glass-card p-8 rounded-3xl hover:border-champagne-400 hover:shadow-luxury transition-all duration-300 group">
+          <div class="w-14 h-14 rounded-2xl bg-champagne-100 text-champagne-700 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-champagne-600 group-hover:text-white transition-all duration-300 shadow-sm">
+            <i data-lucide="map-pin" class="w-7 h-7"></i>
+          </div>
+          <h3 class="font-serif text-2xl font-bold text-onyx-900 mb-2">Maps &amp; Multi-Day Itinerary</h3>
+          <p class="text-sm text-onyx-800/70 leading-relaxed mb-4">
+            One-touch navigation via Apple Maps, Google Maps, and Waze. Clear schedules for multi-day events like Sangeet, Mehendi, Rehearsal Dinners, and Post-Wedding Brunches.
+          </p>
+          <span class="text-xs font-semibold text-champagne-700 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+            1-Click Uber &amp; Map directions <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </span>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="glass-card p-8 rounded-3xl hover:border-champagne-400 hover:shadow-luxury transition-all duration-300 group">
+          <div class="w-14 h-14 rounded-2xl bg-champagne-100 text-champagne-700 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-champagne-600 group-hover:text-white transition-all duration-300 shadow-sm">
+            <i data-lucide="message-square" class="w-7 h-7"></i>
+          </div>
+          <h3 class="font-serif text-2xl font-bold text-onyx-900 mb-2">Digital Audio &amp; Text Guestbook</h3>
+          <p class="text-sm text-onyx-800/70 leading-relaxed mb-4">
+            Guests record heartfelt audio messages, emotional voice notes, and personalized selfie wishes that you can treasure forever in an interactive digital heirloom archive.
+          </p>
+          <span class="text-xs font-semibold text-champagne-700 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+            Downloadable audio keepsake <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </span>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="glass-card p-8 rounded-3xl hover:border-champagne-400 hover:shadow-luxury transition-all duration-300 group">
+          <div class="w-14 h-14 rounded-2xl bg-champagne-100 text-champagne-700 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-champagne-600 group-hover:text-white transition-all duration-300 shadow-sm">
+            <i data-lucide="gift" class="w-7 h-7"></i>
+          </div>
+          <h3 class="font-serif text-2xl font-bold text-onyx-900 mb-2">Cash Registry &amp; Wishing Well</h3>
+          <p class="text-sm text-onyx-800/70 leading-relaxed mb-4">
+            Direct integration with Venmo, Zelle, PayPal, UPI, and Honeymoon fund registries. Zero middleman transaction cuts taken by MYQRSITE.
+          </p>
+          <span class="text-xs font-semibold text-champagne-700 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+            0% Platform Transfer Fee <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== INTERACTIVE LIVE TEMPLATE SHOWCASE ==================== -->
+  <section id="templates" class="py-24 bg-champagne-100/40 relative border-t border-champagne-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div class="space-y-3">
+          <span class="text-xs uppercase tracking-widest text-champagne-700 font-bold bg-champagne-100 px-3.5 py-1 rounded-full border border-champagne-300">Curated Haute Designs</span>
+          <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-onyx-900">
+            Choose Your Signature Microsite Theme
+          </h2>
+          <p class="text-onyx-800/75 text-sm sm:text-base font-light max-w-xl">
+            Every template is 100% responsive, customizable with fonts, color tones, background music, and password protection.
+          </p>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="flex flex-wrap gap-2 mt-6 md:mt-0" id="template-filters">
+          <button onclick="filterTemplates('all')" class="filter-btn active-filter px-4 py-2 rounded-full text-xs font-semibold bg-champagne-700 text-white shadow-sm transition">All Designs</button>
+          <button onclick="filterTemplates('wedding')" class="filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-white text-onyx-800 border border-champagne-300 hover:bg-champagne-100 transition">Weddings</button>
+          <button onclick="filterTemplates('reception')" class="filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-white text-onyx-800 border border-champagne-300 hover:bg-champagne-100 transition">Sangeet &amp; Reception</button>
+          <button onclick="filterTemplates('gala')" class="filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-white text-onyx-800 border border-champagne-300 hover:bg-champagne-100 transition">Anniversaries &amp; Galas</button>
+        </div>
+      </div>
+
+      <!-- Template Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="templates-grid">
+        
+        <!-- Template 1: Romance Royale -->
+        <div class="template-card group bg-white rounded-3xl overflow-hidden border border-champagne-200/90 shadow-md hover:shadow-luxury transition-all duration-300" data-category="wedding">
+          <div class="relative h-72 overflow-hidden bg-champagne-200">
+            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80" alt="Romance Royale" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+            <div class="absolute top-4 left-4">
+              <span class="bg-white/90 backdrop-blur-sm text-onyx-900 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Most Popular</span>
+            </div>
+            <div class="absolute bottom-4 left-4 right-4 text-white">
+              <p class="text-xs text-champagne-300 font-medium tracking-widest uppercase">Classic European Botanical</p>
+              <h3 class="font-serif text-2xl font-bold">Villa Medici Gold</h3>
+            </div>
+          </div>
+          <div class="p-6 space-y-4">
+            <p class="text-xs text-onyx-800/70 leading-relaxed">
+              Warm champagne foil textures, serif typography, soft floral petal accents, and integrated Spotify ambient soundtrack.
+            </p>
+            <div class="flex items-center justify-between pt-2 border-t border-champagne-100">
+              <span class="text-xs text-champagne-700 font-medium">Includes: RSVP, Registry, Live Slides</span>
+              <button onclick="openPreviewModal('Villa Medici Gold', 'wedding', 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80')" class="px-4 py-2 rounded-xl bg-champagne-100 hover:bg-champagne-600 hover:text-white text-champagne-800 text-xs font-semibold transition">
+                Preview Demo
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Template 2: Royal Sangeet & Heritage -->
+        <div class="template-card group bg-white rounded-3xl overflow-hidden border border-champagne-200/90 shadow-md hover:shadow-luxury transition-all duration-300" data-category="reception">
+          <div class="relative h-72 overflow-hidden bg-champagne-200">
+            <img src="https://images.unsplash.com/photo-1544077960-604201fe74bc?auto=format&fit=crop&w=800&q=80" alt="Royal Sangeet" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+            <div class="absolute top-4 left-4">
+              <span class="bg-roseGold-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Multi-Day Ready</span>
+            </div>
+            <div class="absolute bottom-4 left-4 right-4 text-white">
+              <p class="text-xs text-champagne-300 font-medium tracking-widest uppercase">Vibrant Regal Splendor</p>
+              <h3 class="font-serif text-2xl font-bold">Jaipur Marigold</h3>
+            </div>
+          </div>
+          <div class="p-6 space-y-4">
+            <p class="text-xs text-onyx-800/70 leading-relaxed">
+              Engineered for 3-5 day Indian weddings (Haldi, Mehendi, Sangeet, Pheras) with multi-event timelines and bilingual hindi/english support.
+            </p>
+            <div class="flex items-center justify-between pt-2 border-t border-champagne-100">
+              <span class="text-xs text-champagne-700 font-medium">Includes: 5 Sub-events, Dress Code Guide</span>
+              <button onclick="openPreviewModal('Jaipur Marigold', 'reception', 'https://images.unsplash.com/photo-1544077960-604201fe74bc?auto=format&fit=crop&w=800&q=80')" class="px-4 py-2 rounded-xl bg-champagne-100 hover:bg-champagne-600 hover:text-white text-champagne-800 text-xs font-semibold transition">
+                Preview Demo
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Template 3: Modern Onyx Black Tie -->
+        <div class="template-card group bg-white rounded-3xl overflow-hidden border border-champagne-200/90 shadow-md hover:shadow-luxury transition-all duration-300" data-category="gala">
+          <div class="relative h-72 overflow-hidden bg-champagne-200">
+            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80" alt="Black Tie Gala" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+            <div class="absolute top-4 left-4">
+              <span class="bg-onyx-900 text-champagne-400 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Haute Noir</span>
+            </div>
+            <div class="absolute bottom-4 left-4 right-4 text-white">
+              <p class="text-xs text-champagne-300 font-medium tracking-widest uppercase">Sleek Contemporary Gala</p>
+              <h3 class="font-serif text-2xl font-bold">Midnight Metropolitan</h3>
+            </div>
+          </div>
+          <div class="p-6 space-y-4">
+            <p class="text-xs text-onyx-800/70 leading-relaxed">
+              Dramatic high-contrast onyx backdrop with golden metallic lettering, table locator, and VIP seating chart integration.
+            </p>
+            <div class="flex items-center justify-between pt-2 border-t border-champagne-100">
+              <span class="text-xs text-champagne-700 font-medium">Includes: Table Seating Finder, VIP RSVP</span>
+              <button onclick="openPreviewModal('Midnight Metropolitan', 'gala', 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80')" class="px-4 py-2 rounded-xl bg-champagne-100 hover:bg-champagne-600 hover:text-white text-champagne-800 text-xs font-semibold transition">
+                Preview Demo
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Template 4: Bohemian Coastal Breeze -->
+        <div class="template-card group bg-white rounded-3xl overflow-hidden border border-champagne-200/90 shadow-md hover:shadow-luxury transition-all duration-300" data-category="wedding">
+          <div class="relative h-72 overflow-hidden bg-champagne-200">
+            <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80" alt="Bohemian Wedding" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+            <div class="absolute bottom-4 left-4 right-4 text-white">
+              <p class="text-xs text-champagne-300 font-medium tracking-widest uppercase">Destination &amp; Beachfront</p>
+              <h3 class="font-serif text-2xl font-bold">Amalfi Sunsets</h3>
+            </div>
+          </div>
+          <div class="p-6 space-y-4">
+            <p class="text-xs text-onyx-800/70 leading-relaxed">
+              Soft linen textures, terracotta notes, curated local travel guide recommendations for overseas guests, and airport shuttle schedules.
+            </p>
+            <div class="flex items-center justify-between pt-2 border-t border-champagne-100">
+              <span class="text-xs text-champagne-700 font-medium">Includes: Travel Concierge &amp; Map</span>
+              <button onclick="openPreviewModal('Amalfi Sunsets', 'wedding', 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80')" class="px-4 py-2 rounded-xl bg-champagne-100 hover:bg-champagne-600 hover:text-white text-champagne-800 text-xs font-semibold transition">
+                Preview Demo
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Template 5: Silver Jubilee & Anniversary -->
+        <div class="template-card group bg-white rounded-3xl overflow-hidden border border-champagne-200/90 shadow-md hover:shadow-luxury transition-all duration-300" data-category="gala">
+          <div class="relative h-72 overflow-hidden bg-champagne-200">
+            <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=800&q=80" alt="Anniversary" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+            <div class="absolute bottom-4 left-4 right-4 text-white">
+              <p class="text-xs text-champagne-300 font-medium tracking-widest uppercase">Milestone Soirée</p>
+              <h3 class="font-serif text-2xl font-bold">Silver &amp; Starlight</h3>
+            </div>
+          </div>
+          <div class="p-6 space-y-4">
+            <p class="text-xs text-onyx-800/70 leading-relaxed">
+              Designed for 25th/50th anniversaries and milestone birthdays with retrospective memory photo timelines and family video tributes.
+            </p>
+            <div class="flex items-center justify-between pt-2 border-t border-champagne-100">
+              <span class="text-xs text-champagne-700 font-medium">Includes: Decade Photo Story, Audio Wishes</span>
+              <button onclick="openPreviewModal('Silver & Starlight', 'gala', 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=800&q=80')" class="px-4 py-2 rounded-xl bg-champagne-100 hover:bg-champagne-600 hover:text-white text-champagne-800 text-xs font-semibold transition">
+                Preview Demo
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Template 6: Garden Glasshouse Minimalist -->
+        <div class="template-card group bg-white rounded-3xl overflow-hidden border border-champagne-200/90 shadow-md hover:shadow-luxury transition-all duration-300" data-category="wedding">
+          <div class="relative h-72 overflow-hidden bg-champagne-200">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" alt="Botanical Wedding" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+            <div class="absolute bottom-4 left-4 right-4 text-white">
+              <p class="text-xs text-champagne-300 font-medium tracking-widest uppercase">Modern Minimalist</p>
+              <h3 class="font-serif text-2xl font-bold">Verona Greenhouse</h3>
+            </div>
+          </div>
+          <div class="p-6 space-y-4">
+            <p class="text-xs text-onyx-800/70 leading-relaxed">
+              Sage greens, clean sans-serif editorial layout, interactive gift registry links, and seamless audio RSVP for guests who prefer to speak.
+            </p>
+            <div class="flex items-center justify-between pt-2 border-t border-champagne-100">
+              <span class="text-xs text-champagne-700 font-medium">Includes: Minimalist RSVP, Wishlist</span>
+              <button onclick="openPreviewModal('Verona Greenhouse', 'wedding', 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80')" class="px-4 py-2 rounded-xl bg-champagne-100 hover:bg-champagne-600 hover:text-white text-champagne-800 text-xs font-semibold transition">
+                Preview Demo
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== QUICK PREVIEW MODAL ==================== -->
+  <div id="preview-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-champagne-50 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-champagne-300 transform scale-95 transition-transform duration-300 relative">
+      <button onclick="closePreviewModal()" class="absolute top-5 right-5 p-2 rounded-full hover:bg-champagne-200 text-onyx-800 transition">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center space-x-3 mb-4">
+        <span class="w-3 h-3 rounded-full bg-emerald-500 animate-ping"></span>
+        <span class="text-xs font-bold text-champagne-700 uppercase tracking-widest" id="modal-category">Wedding Theme</span>
+      </div>
+
+      <h3 class="font-serif text-3xl font-bold text-onyx-900 mb-2" id="modal-title">Template Preview</h3>
+      <p class="text-xs text-gray-600 mb-4">Interactive live rendering preview for mobile and desktop screens.</p>
+
+      <div class="rounded-2xl overflow-hidden border border-champagne-300 mb-6 h-64 relative bg-onyx-900">
+        <img id="modal-image" src="" alt="Template Preview" class="w-full h-full object-cover opacity-90">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6">
+          <div class="text-white space-y-1">
+            <p class="text-sm font-serif font-bold">✨ Live Features Included:</p>
+            <p class="text-xs text-champagne-200">Instant QR download, Apple/Google Maps venue links, Live photo stream, Audio guestbook.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-end gap-3">
+        <button onclick="closePreviewModal()" class="w-full sm:w-auto px-5 py-2.5 rounded-full border border-champagne-300 text-xs font-semibold text-onyx-800 hover:bg-champagne-100">
+          Close Preview
+        </button>
+        <a href="#qr-demo" onclick="closePreviewModal()" class="w-full sm:w-auto px-6 py-2.5 rounded-full bg-champagne-600 hover:bg-champagne-700 text-white text-xs font-semibold shadow-md flex items-center justify-center gap-1.5">
+          <span>Use This Template Now</span>
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== HOW IT WORKS (3 SIMPLE STEPS) ==================== -->
+  <section id="how-it-works" class="py-24 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-20 space-y-3">
+        <span class="text-xs uppercase tracking-widest text-champagne-700 font-bold bg-champagne-100 px-3.5 py-1 rounded-full border border-champagne-300">Fast &amp; Frictionless</span>
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-onyx-900">
+          From Invitation to Celebration in 3 Steps
+        </h2>
+        <p class="text-onyx-800/75 text-sm sm:text-base font-light">
+          No coding, no website designers charging thousands, and no technical headaches.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+        
+        <!-- Step 1 -->
+        <div class="glass-card p-8 rounded-3xl relative text-center md:text-left border border-champagne-300/70 hover:shadow-luxury transition-all duration-300">
+          <div class="w-12 h-12 rounded-2xl bg-champagne-700 text-white font-serif text-xl font-bold flex items-center justify-center mb-6 shadow-md mx-auto md:mx-0">
+            1
+          </div>
+          <h3 class="font-serif text-2xl font-bold text-onyx-900 mb-2">Pick &amp; Personalize</h3>
+          <p class="text-sm text-onyx-800/70 leading-relaxed">
+            Select a design theme that reflects your celebration. Add your love story, venue addresses, itinerary timings, and customized RSVP questions in under 10 minutes.
+          </p>
+          <div class="mt-6 pt-4 border-t border-champagne-200/60 flex items-center justify-center md:justify-start gap-2 text-xs text-champagne-700 font-medium">
+            <i data-lucide="palette" class="w-4 h-4"></i>
+            <span>Fonts, Colors &amp; Backgrounds</span>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="glass-card p-8 rounded-3xl relative text-center md:text-left border border-champagne-300/70 hover:shadow-luxury transition-all duration-300">
+          <div class="w-12 h-12 rounded-2xl bg-champagne-700 text-white font-serif text-xl font-bold flex items-center justify-center mb-6 shadow-md mx-auto md:mx-0">
+            2
+          </div>
+          <h3 class="font-serif text-2xl font-bold text-onyx-900 mb-2">Generate Your Bespoke QR</h3>
+          <p class="text-sm text-onyx-800/70 leading-relaxed">
+            Download your high-resolution vector QR code styled with custom monogram centerpieces, metallic borders, or festive floral frames suited for high-end printing.
+          </p>
+          <div class="mt-6 pt-4 border-t border-champagne-200/60 flex items-center justify-center md:justify-start gap-2 text-xs text-champagne-700 font-medium">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>Vector SVG, PDF &amp; Ultra HD PNG</span>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="glass-card p-8 rounded-3xl relative text-center md:text-left border border-champagne-300/70 hover:shadow-luxury transition-all duration-300">
+          <div class="w-12 h-12 rounded-2xl bg-champagne-700 text-white font-serif text-xl font-bold flex items-center justify-center mb-6 shadow-md mx-auto md:mx-0">
+            3
+          </div>
+          <h3 class="font-serif text-2xl font-bold text-onyx-900 mb-2">Print, Scan &amp; Celebrate</h3>
+          <p class="text-sm text-onyx-800/70 leading-relaxed">
+            Print onto paper save-the-dates, acrylic welcome signs, and dinner tables. On event day, watch guests upload photos, sign the guestbook, and follow the timeline live.
+          </p>
+          <div class="mt-6 pt-4 border-t border-champagne-200/60 flex items-center justify-center md:justify-start gap-2 text-xs text-champagne-700 font-medium">
+            <i data-lucide="party-popper" class="w-4 h-4"></i>
+            <span>100% Guest Engagement</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== PLAYFUL LIVE QR GENERATOR DEMO TOOL ==================== -->
+  <section id="qr-demo" class="py-24 bg-gradient-to-b from-champagne-100/50 via-champagne-100 to-champagne-50 relative border-t border-champagne-200">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-14 space-y-3">
+        <span class="text-xs uppercase tracking-widest text-champagne-700 font-bold bg-champagne-200 px-3.5 py-1 rounded-full border border-champagne-300">Interactive Studio</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-onyx-900">
+          Try The Instant QR Generator
+        </h2>
+        <p class="text-onyx-800/75 text-sm sm:text-base font-light">
+          Enter your celebration names and pick a luxury palette to test the instant QR generation engine.
+        </p>
+      </div>
+
+      <div class="glass-card p-8 sm:p-10 rounded-3xl border border-champagne-300/90 shadow-luxury">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+          
+          <!-- Generator Form Controls -->
+          <div class="md:col-span-7 space-y-5">
+            <div>
+              <label class="block text-xs font-semibold text-onyx-900 mb-1.5 uppercase tracking-wider">Event Title / Couple Names</label>
+              <input type="text" id="qr-name-input" value="Elena & Julian" class="w-full px-4 py-3 rounded-xl border border-champagne-300 bg-white/90 focus:outline-none focus:ring-2 focus:ring-champagne-500 text-sm font-medium" placeholder="e.g. Maya & Arjun's Sangeet">
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-onyx-900 mb-1.5 uppercase tracking-wider">Event Tagline or Date</label>
+              <input type="text" id="qr-sub-input" value="November 14, 2026 • Florence" class="w-full px-4 py-3 rounded-xl border border-champagne-300 bg-white/90 focus:outline-none focus:ring-2 focus:ring-champagne-500 text-sm" placeholder="e.g. Save The Date • Sunset Vows">
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-onyx-900 mb-2 uppercase tracking-wider">Select Luxury Palette</label>
+              <div class="flex items-center space-x-3">
+                <button type="button" onclick="setQRPalette('#75542B', '#FAF5ED', 'Champagne Gold')" class="w-9 h-9 rounded-full bg-[#75542B] border-2 border-white shadow-sm ring-2 ring-champagne-400 focus:outline-none" title="Champagne Gold"></button>
+                <button type="button" onclick="setQRPalette('#B76E5F', '#FFF6F4', 'Rose Gold')" class="w-9 h-9 rounded-full bg-[#B76E5F] border-2 border-white shadow-sm focus:outline-none" title="Rose Gold"></button>
+                <button type="button" onclick="setQRPalette('#1A1816', '#FAF9F6', 'Metropolitan Onyx')" class="w-9 h-9 rounded-full bg-[#1A1816] border-2 border-white shadow-sm focus:outline-none" title="Noir Onyx"></button>
+                <button type="button" onclick="setQRPalette('#2D5A43', '#F2F9F5', 'Emerald Botanical')" class="w-9 h-9 rounded-full bg-[#2D5A43] border-2 border-white shadow-sm focus:outline-none" title="Emerald Forest"></button>
+                <span class="text-xs text-onyx-800 font-medium pl-2" id="palette-label">Champagne Gold</span>
+              </div>
+            </div>
+
+            <div class="pt-2">
+              <button onclick="updateGeneratedQR()" class="px-6 py-3 rounded-xl bg-champagne-700 hover:bg-champagne-800 text-white font-semibold text-xs tracking-wide shadow-md transition flex items-center gap-2">
+                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                <span>Update QR Preview Badge</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Dynamic QR Badge Display Box -->
+          <div class="md:col-span-5 flex flex-col items-center justify-center">
+            
+            <div id="qr-printable-badge" class="bg-white p-6 rounded-3xl border-2 border-champagne-300 shadow-xl flex flex-col items-center text-center max-w-[260px] w-full transition-transform hover:scale-102">
+              
+              <!-- Monogram Crest -->
+              <div class="w-8 h-8 rounded-full border border-champagne-400 flex items-center justify-center text-champagne-700 font-serif text-xs font-bold mb-2" id="qr-badge-monogram">
+                EJ
+              </div>
+
+              <h4 class="font-serif text-lg font-bold text-onyx-900 leading-tight" id="qr-badge-title">Elena &amp; Julian</h4>
+              <p class="text-[9px] uppercase tracking-wider text-champagne-700 font-semibold mb-3" id="qr-badge-subtitle">November 14, 2026 • Florence</p>
+
+              <!-- QR Canvas Holder -->
+              <div id="qrcode-container" class="p-2.5 bg-champagne-50 rounded-2xl border border-champagne-200/80 flex items-center justify-center">
+                <!-- QR Code rendered here via JS -->
+              </div>
+
+              <p class="text-[9px] text-gray-500 mt-3 font-medium flex items-center gap-1">
+                <i data-lucide="camera" class="w-3 h-3 text-champagne-600"></i> Scan to open event microsite
+              </p>
+            </div>
+
+            <div class="mt-4 flex gap-2">
+              <button onclick="downloadBadgeMock()" class="text-xs font-semibold text-champagne-700 bg-champagne-100 hover:bg-champagne-200 px-4 py-2 rounded-xl transition flex items-center gap-1.5">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i> Download Printable Card
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== TESTIMONIALS & REVIEWS ==================== -->
+  <section class="py-24 bg-champagne-100/50 border-t border-champagne-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+        <span class="text-xs uppercase tracking-widest text-champagne-700 font-bold bg-champagne-100 px-3.5 py-1 rounded-full border border-champagne-300">Love Letters &amp; Accolades</span>
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-onyx-900">
+          Loved by Over 12,000 Couples
+        </h2>
+        <p class="text-onyx-800/75 text-sm sm:text-base font-light">
+          Here is how MYQRSITE transformed celebrations around the globe.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Review 1 -->
+        <div class="bg-white p-8 rounded-3xl border border-champagne-200 shadow-md flex flex-col justify-between">
+          <div>
+            <div class="flex text-champagne-500 mb-4">
+              <i data-lucide="star" class="w-4 h-4 fill-champagne-500"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-champagne-500"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-champagne-500"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-champagne-500"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-champagne-500"></i>
+            </div>
+            <p class="font-serif italic text-base text-onyx-900 mb-6 leading-relaxed">
+              "The live photo wall on our reception projector was the absolute highlight of the night! We collected over 480 candids our official photographer never could have caught. Printing the QR onto our gold foil cards was effortless."
+            </p>
+          </div>
+          <div class="flex items-center space-x-3 pt-4 border-t border-champagne-100">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Camille & Alexandre" class="w-11 h-11 rounded-full object-cover border border-champagne-300">
+            <div>
+              <h4 class="font-bold text-xs text-onyx-900">Camille &amp; Alexandre</h4>
+              <p class="text-[10px] text-gray-500">Château de Varennes, France</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="bg-white p-8 rounded-3xl border border-champagne-200 shadow-md flex flex-col justify-between">
+          <div>
+            <div class="flex text-champagne-500 mb-4">
+              <i data-lucide="star" class="w-4 h-4 fill-champagne-500"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-champagne-500"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-champagne-500"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-champagne-500"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-champagne-500"></i>
+            </div>
+            <p class="font-serif italic text-base text-onyx-900 mb-6 leading-relaxed">
+              "With 450 guests traveling from 3 countries for our 4-day Sangeet and wedding, having Google Maps links, dress codes, and song requests in one QR link saved us dozens of stressed WhatsApp messages."
+            </p>
+          </div>
+          <div class="flex items-center space-x-3 pt-4 border-t border-champagne-100">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="Rohan & Priya" class="w-11 h-11 rounded-full object-cover border border-champagne-300">
+            <div>
+              <h4 class="font-bold text-xs text-onyx-900">Priya &amp; Rohan Patel</h4>
+              <p class="text-[10px] text-gray-500">Udaipur Palace, India</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="bg-white p-8 rounded-3xl border border-champagne-200 shadow-md flex flex-col justify-between">
+          <div>
+            <div class="flex text-champagne-500 mb-4">
+              <i data-lucide="star" class="w-4 h-4 fill-champagne-500"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-champagne-500"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-champagne-500"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-champagne-500"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-champagne-500"></i>
+            </div>
+            <p class="font-serif italic text-base text-onyx-900 mb-6 leading-relaxed">
+              "As a high-end wedding planner, MYQRSITE is my secret weapon. Clients are blown away by the elegant phone previews and our RSVP confirmation rate skyrocketed to 99.4% within days."
+            </p>
+          </div>
+          <div class="flex items-center space-x-3 pt-4 border-t border-champagne-100">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=120&q=80" alt="Elena Vance" class="w-11 h-11 rounded-full object-cover border border-champagne-300">
+            <div>
+              <h4 class="font-bold text-xs text-onyx-900">Seraphina Rossi</h4>
+              <p class="text-[10px] text-champagne-700 font-semibold">Lead Planner, Tuscan Luxury Events</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== FREQUENTLY ASKED QUESTIONS (FAQ) ==================== -->
+  <section id="faq" class="py-24 relative">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+        <span class="text-xs uppercase tracking-widest text-champagne-700 font-bold bg-champagne-100 px-3.5 py-1 rounded-full border border-champagne-300">Got Questions?</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-onyx-900">
+          Frequently Asked Questions
+        </h2>
+        <p class="text-onyx-800/75 text-sm sm:text-base font-light">
+          Everything you need to know about setting up and using your event microsite.
+        </p>
+      </div>
+
+      <div class="space-y-4" id="faq-accordion">
+        
+        <!-- FAQ item 1 -->
+        <div class="glass-card rounded-2xl border border-champagne-300/80 overflow-hidden">
+          <button onclick="toggleFAQ(this)" class="w-full p-5 text-left flex justify-between items-center text-sm font-bold text-onyx-900 hover:text-champagne-700 transition">
+            <span>Do my guests need to download an app or register an account?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 transform transition-transform duration-200"></i>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-xs text-onyx-800/80 leading-relaxed border-t border-champagne-200/50 pt-3">
+            Not at all! Guests simply point their standard smartphone camera at the printed or digital QR code. The microsite opens immediately in their default browser (Safari, Chrome, etc.) with lightning speed.
+          </div>
+        </div>
+
+        <!-- FAQ item 2 -->
+        <div class="glass-card rounded-2xl border border-champagne-300/80 overflow-hidden">
+          <button onclick="toggleFAQ(this)" class="w-full p-5 text-left flex justify-between items-center text-sm font-bold text-onyx-900 hover:text-champagne-700 transition">
+            <span>Can I update the event schedule or details after printing the QR code?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 transform transition-transform duration-200"></i>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-xs text-onyx-800/80 leading-relaxed border-t border-champagne-200/50 pt-3">
+            Yes! That is the core advantage of MYQRSITE dynamic technology. The printed QR code remains 100% the same, while you can update ceremony hours, venue directions, shuttle times, or photos anytime from your dashboard.
+          </div>
+        </div>
+
+        <!-- FAQ item 3 -->
+        <div class="glass-card rounded-2xl border border-champagne-300/80 overflow-hidden">
+          <button onclick="toggleFAQ(this)" class="w-full p-5 text-left flex justify-between items-center text-sm font-bold text-onyx-900 hover:text-champagne-700 transition">
+            <span>How does the Live Reception Photo Wall work on our big day?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 transform transition-transform duration-200"></i>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-xs text-onyx-800/80 leading-relaxed border-t border-champagne-200/50 pt-3">
+            We provide a dedicated projector link. Simply open it on a laptop connected to your venue screen or TV. When guests scan the table QR and snap photos on their phones, they appear on the ballroom screen in seconds with elegant transitions! You also have full moderation controls.
+          </div>
+        </div>
+
+        <!-- FAQ item 4 -->
+        <div class="glass-card rounded-2xl border border-champagne-300/80 overflow-hidden">
+          <button onclick="toggleFAQ(this)" class="w-full p-5 text-left flex justify-between items-center text-sm font-bold text-onyx-900 hover:text-champagne-700 transition">
+            <span>Is our event microsite private and password protected?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 transform transition-transform duration-200"></i>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-xs text-onyx-800/80 leading-relaxed border-t border-champagne-200/50 pt-3">
+            Yes. You can activate optional PIN password protection so only invited friends and family can access your photos, itinerary, and guestbook. Search engines can also be blocked with one click.
+          </div>
+        </div>
+
+        <!-- FAQ item 5 -->
+        <div class="glass-card rounded-2xl border border-champagne-300/80 overflow-hidden">
+          <button onclick="toggleFAQ(this)" class="w-full p-5 text-left flex justify-between items-center text-sm font-bold text-onyx-900 hover:text-champagne-700 transition">
+            <span>In what formats can I download our QR code for printing?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 transform transition-transform duration-200"></i>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-xs text-onyx-800/80 leading-relaxed border-t border-champagne-200/50 pt-3">
+            We export in high-resolution vector SVG (infinite scalability for massive venue signs), 300 DPI CMYK PDF for professional letterpress printers, and transparent PNG for stationery graphic designers.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== CALL TO ACTION BANNER ==================== -->
+  <section class="py-20 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="rounded-3xl bg-gradient-to-r from-onyx-900 via-champagne-900 to-onyx-950 p-10 sm:p-16 text-center text-white relative overflow-hidden shadow-2xl border border-champagne-400/40">
+        
+        <!-- Glowing Orb Background -->
+        <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-champagne-500/20 rounded-full blur-[80px] pointer-events-none"></div>
+
+        <span class="inline-block text-xs uppercase tracking-widest text-champagne-300 font-bold bg-white/10 px-4 py-1 rounded-full mb-4">
+          Ready to Delight Your Guests?
+        </span>
+
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 tracking-tight">
+          Create Your Personalized Event Microsite in Minutes
+        </h2>
+
+        <p class="text-champagne-100/80 text-sm sm:text-base max-w-2xl mx-auto font-light mb-8">
+          Join thousands of happy couples and hosts. Enjoy seamless RSVPs, live photo memories, and effortless celebration coordination.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="#qr-demo" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gradient-to-r from-champagne-500 via-champagne-400 to-roseGold-400 text-onyx-950 font-bold text-sm tracking-wide shadow-luxury hover:scale-105 transition-all">
+            Get Started Now
+          </a>
+          <a href="#interactive-demo" class="w-full sm:w-auto px-8 py-3.5 rounded-full border border-champagne-400/60 text-champagne-100 hover:bg-white/10 font-medium text-sm transition">
+            Preview Live Demo Again
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-champagne-100/90 border-t border-champagne-200 pt-16 pb-12 text-onyx-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-champagne-200">
+        
+        <!-- Brand column -->
+        <div class="lg:col-span-2 space-y-4">
+          <a href="#" class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-champagne-700 text-white flex items-center justify-center">
+              <i data-lucide="qr-code" class="w-5 h-5"></i>
+            </div>
+            <span class="font-serif text-2xl font-bold tracking-wider">MYQR<span class="text-champagne-600 font-light">SITE</span></span>
+          </a>
+          <p class="text-xs text-onyx-800/70 max-w-sm leading-relaxed">
+            The premier platform for interactive luxury wedding and milestone celebration microsites accessed seamlessly through customized designer QR codes.
+          </p>
+          <div class="flex items-center space-x-3 pt-2">
+            <a href="#" class="w-9 h-9 rounded-full bg-champagne-200 hover:bg-champagne-600 hover:text-white text-champagne-800 flex items-center justify-center transition">
+              <i data-lucide="instagram" class="w-4 h-4"></i>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-full bg-champagne-200 hover:bg-champagne-600 hover:text-white text-champagne-800 flex items-center justify-center transition">
+              <i data-lucide="facebook" class="w-4 h-4"></i>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-full bg-champagne-200 hover:bg-champagne-600 hover:text-white text-champagne-800 flex items-center justify-center transition">
+              <i data-lucide="share-2" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Links: Product -->
+        <div class="space-y-3">
+          <h4 class="text-xs uppercase font-bold tracking-wider text-onyx-900">Product</h4>
+          <ul class="space-y-2 text-xs text-onyx-800/70 font-medium">
+            <li><a href="#features" class="hover:text-champagne-700 transition">Live Photo Wall</a></li>
+            <li><a href="#features" class="hover:text-champagne-700 transition">RSVP &amp; Meal Tracker</a></li>
+            <li><a href="#templates" class="hover:text-champagne-700 transition">Wedding Themes</a></li>
+            <li><a href="#qr-demo" class="hover:text-champagne-700 transition">QR Vector Studio</a></li>
+          </ul>
+        </div>
+
+        <!-- Links: Occasions -->
+        <div class="space-y-3">
+          <h4 class="text-xs uppercase font-bold tracking-wider text-onyx-900">Occasions</h4>
+          <ul class="space-y-2 text-xs text-onyx-800/70 font-medium">
+            <li><a href="#templates" class="hover:text-champagne-700 transition">Destination Weddings</a></li>
+            <li><a href="#templates" class="hover:text-champagne-700 transition">Sangeet &amp; Receptions</a></li>
+            <li><a href="#templates" class="hover:text-champagne-700 transition">Silver Anniversaries</a></li>
+            <li><a href="#templates" class="hover:text-champagne-700 transition">Black-Tie Galas</a></li>
+            <li><a href="#templates" class="hover:text-champagne-700 transition">Corporate Soirées</a></li>
+          </ul>
+        </div>
+
+        <!-- Newsletter Subscription -->
+        <div class="space-y-3">
+          <h4 class="text-xs uppercase font-bold tracking-wider text-onyx-900">Wedding Tips &amp; Inspo</h4>
+          <p class="text-xs text-onyx-800/70">Receive curated invitation trends, timeline templates, and etiquette guides.</p>
+          <form onsubmit="handleNewsletter(event)" class="space-y-2">
+            <input type="email" required placeholder="your.name@email.com" class="w-full px-3 py-2 text-xs rounded-xl border border-champagne-300 focus:outline-none focus:ring-1 focus:ring-champagne-600 bg-white">
+            <button type="submit" class="w-full py-2 bg-champagne-700 hover:bg-champagne-800 text-white rounded-xl text-xs font-semibold transition">
+              Subscribe Free
+            </button>
+          </form>
+        </div>
+
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-onyx-800/60 gap-4">
+        <p>© 2026 MYQRSITE Inc. Crafted with elegance for unforgettable celebrations worldwide.</p>
+        <div class="flex space-x-6">
+          <a href="#" class="hover:text-champagne-700 transition">Privacy Policy</a>
+          <a href="#" class="hover:text-champagne-700 transition">Terms of Service</a>
+          <a href="#" class="hover:text-champagne-700 transition">Security &amp; Encryption</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ==================== LOGIC & INTERACTIONS JAVASCRIPT ==================== -->
+    <script src="js/script.js"></script>
+
+</body>
+</html>
